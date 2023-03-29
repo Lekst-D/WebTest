@@ -1,0 +1,121 @@
+<html>
+    {% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href={% static "bootstrap-5.3.0-alpha1-dist/css/bootstrap.css" %}>
+    <script src={% static "bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.js" %}></script>
+    <script src={% static "bootstrap-5.3.0-alpha1-dist/js/bootstrap.esm.js"  %}></script>
+    <script src={% static "bootstrap-5.3.0-alpha1-dist/js/bootstrap.js"  %}></script>
+    <script src={% static "bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.min.js"  %}></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand text-light " href="#">Лого</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+    </div>
+</nav>
+
+<div class="container justify-content-center  pt-5 mt-3 text-center">
+    <div class="container pt-5 mt-5 align-items-center ">
+
+        <div class="row align-items-center justify-content-center mt-3">
+            <div class="col-12 col-md-6 ">
+                <div class="card  shadow p-3 mb-5 bg-white rounded ">
+                    <div class="card-body ">
+                        <form>
+                            <div class="row justify-content-center">
+
+                                <h2 class="text-secondary mb-3">Авторизация</h2>
+                                <div class="mb-3 w-75 mt-3">
+                                    <input type="login" class="form-control border-secondary" id="exampleInputLogin"
+                                           aria-describedby="loginHelp" placeholder="Логин" >
+                                </div>
+
+                            </div>
+
+                            <div class="row justify-content-center">
+                                <div class="mb-3 w-75 mt-3">
+                                    <input type="pass" class="form-control border-secondary" id="exampleInputPass"
+                                           aria-describedby="passHelp" placeholder="Пароль">
+                                </div>
+                            </div>
+                            <a class="btn btn-outline-primary w-25 mt-3" type="button" 
+                            onclick="LoginUser()" > Войти</a>
+                            <!-- href="alltests(user).html" -->
+                        </form>
+                        <label>Служба подержки: 89249999999</label><br>
+                        <label>Почта: support123@mail.com</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{user.id}}
+</div>
+
+
+</div>
+
+<script>
+    function LoginUser() {
+            // let f=$('#doc')[0].files.length;
+            // //alert(f);
+            // for(let i = 0; i<(f); i++){
+            var data1 = new FormData()
+            data1.append('Login', $('#exampleInputLogin').val())
+            data1.append('Password',$('#exampleInputPass').val())
+            // data1.append('DateCreate', $('#DateCreate').val())
+            // data1.append('Price', $('#Price').val())
+            // data1.append('Creater', $('#Creater').val())
+            // data1.append('Description', $('#Description').val())
+            // data1.append('file', $('#doc')[0].files[i])
+
+            /*let fi = $('#doc')[0].files[0];
+            let reader = new FileReader();
+            reader.addEventListener("load", function () {
+                let img = document.getElementsByClassName("im")[0];
+                //img.src = reader.result;
+            });
+            reader.readAsDataURL(fi);*/
+
+
+            var token = '{{ csrf_token }}';
+            //alert('csrf generated');
+
+            $.ajax({
+                type: 'post',
+                url: "{% url 'login' %}",
+                data: data1,
+                processData: false,
+                contentType: false,
+                headers: { 'X-CSRFToken': token },
+                success: function (data) {
+                    // alert(data.Login);
+                    if(data.User=="main"){
+                    window.location.href = "{% url 'main' %}";
+                    }
+                    else{
+                       alert("Вы вели не правильный пароль или логин"); 
+                    }
+                },
+                error: function(data){
+                    alert("mistake: "+data);
+                }
+            })
+        }
+</script>
+
+</body>
+
+</html>

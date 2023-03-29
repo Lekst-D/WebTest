@@ -1,0 +1,149 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% load static %}
+    <link rel="stylesheet" href={% static "bootstrap-5.3.0-alpha1-dist/css/bootstrap.css" %}>
+    <script src={% static "bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.js" %}></script>
+    <script src={% static "bootstrap-5.3.0-alpha1-dist/js/bootstrap.esm.js" %}></script>
+    <script src={% static "bootstrap-5.3.0-alpha1-dist/js/bootstrap.js" %}></script>
+    <script src={% static "bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.min.js" %}></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+</head>
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand text-light " href="{% url 'main' %}">Лого</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+    </div>
+</nav>
+
+<body class="bg-light">
+    <div class="container justify-content-center pt-5 mt-2 text-secondary">
+        <div class="container pt-2 card ">
+            <div class="row pt-2 mx-3">
+                <div class="col-12 col-sm-6 ">
+                    <h4>Название теста: {{test.name}}</h4>
+                </div>
+                <div class="col-12 col-sm-6 ">
+                    <div class="container">
+                        <a class="btn btn-outline-primary w-25 float-lg-end " type="button" href="{% url 'admin:index' %}"> Закрыть
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mx-3">
+                <div class="col-12">
+                    <h6>Название категории: {{category.name}}</h6>
+                </div>
+            </div>
+            <div class="row mx-3">
+                <div class="col-12">
+                    <h6>Количество вопросов: {{countQuestion}}</h6>
+                </div>
+            </div>
+            <div class="row  mx-3">
+                <div class="col-12">
+                    <h6>Вопросы в тесте:</h6>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 pt-2 col-md-12 col-sm-12">
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            {% for test in question %}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-heading{{test.id}}">
+                                    <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapse{{test.id}}" aria-expanded="false"
+                                        aria-controls="flush-collapse{{test.id}}">
+                                        
+                                        {{test.question}}
+                                        
+                                    </button>
+                                </h2>
+    
+                                <div id="flush-collapse{{test.id}}" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-heading{{test.id}}"
+                                    data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <!-- {{test.answerRight}} -->
+                                        
+                                        {% if "1" in test.trueAnswer %}
+                                        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.5 0C4.25334 0 0 4.25334 0 9.5C0 14.7467 4.25334 19 9.5 19C14.7467 19 19 14.7467 19 9.5C19 4.25334 14.7467 0 9.5 0ZM8.74 14.3097L3.86498 9.43464L6.01464 7.28536L8.74 10.0103L13.68 5.07034L15.8297 7.22L8.74 14.3097Z" fill="#4DB664"/>
+                                            </svg>
+                                        {% else %}
+                                        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.5 0C4.25334 0 0 4.25334 0 9.5C0 14.7467 4.25334 19 9.5 19C14.7467 19 19 14.7467 19 9.5C19 4.25334 14.7467 0 9.5 0ZM14.755 12.6054L12.6054 14.7546L9.5 11.6497L6.39502 14.7546L4.24536 12.6054L7.35034 9.5L4.24498 6.39464L6.39464 4.24536L9.5 7.35034L12.605 4.24536L14.7546 6.39464L11.6497 9.5L14.755 12.6054Z" fill="#D53131"/>
+                                            </svg>
+                                        {% endif %}
+    
+                                        {{test.answer1}}
+                                    </div>
+                                    <div class="accordion-body">
+                                        {% if "2" in test.trueAnswer %}
+                                        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.5 0C4.25334 0 0 4.25334 0 9.5C0 14.7467 4.25334 19 9.5 19C14.7467 19 19 14.7467 19 9.5C19 4.25334 14.7467 0 9.5 0ZM8.74 14.3097L3.86498 9.43464L6.01464 7.28536L8.74 10.0103L13.68 5.07034L15.8297 7.22L8.74 14.3097Z" fill="#4DB664"/>
+                                            </svg>
+                                        {% else %}
+                                        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.5 0C4.25334 0 0 4.25334 0 9.5C0 14.7467 4.25334 19 9.5 19C14.7467 19 19 14.7467 19 9.5C19 4.25334 14.7467 0 9.5 0ZM14.755 12.6054L12.6054 14.7546L9.5 11.6497L6.39502 14.7546L4.24536 12.6054L7.35034 9.5L4.24498 6.39464L6.39464 4.24536L9.5 7.35034L12.605 4.24536L14.7546 6.39464L11.6497 9.5L14.755 12.6054Z" fill="#D53131"/>
+                                            </svg>
+                                        {% endif %}
+                                        {{test.answer2}}
+                                    </div>
+                                    <div class="accordion-body">
+                                        {% if "3" in test.trueAnswer %}
+                                        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.5 0C4.25334 0 0 4.25334 0 9.5C0 14.7467 4.25334 19 9.5 19C14.7467 19 19 14.7467 19 9.5C19 4.25334 14.7467 0 9.5 0ZM8.74 14.3097L3.86498 9.43464L6.01464 7.28536L8.74 10.0103L13.68 5.07034L15.8297 7.22L8.74 14.3097Z" fill="#4DB664"/>
+                                            </svg>
+                                        {% else %}
+                                        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.5 0C4.25334 0 0 4.25334 0 9.5C0 14.7467 4.25334 19 9.5 19C14.7467 19 19 14.7467 19 9.5C19 4.25334 14.7467 0 9.5 0ZM14.755 12.6054L12.6054 14.7546L9.5 11.6497L6.39502 14.7546L4.24536 12.6054L7.35034 9.5L4.24498 6.39464L6.39464 4.24536L9.5 7.35034L12.605 4.24536L14.7546 6.39464L11.6497 9.5L14.755 12.6054Z" fill="#D53131"/>
+                                            </svg>
+                                        {% endif %}
+                                        {{test.answer3}}
+                                    </div>
+                                    <div class="accordion-body">
+                                        {% if "4" in test.trueAnswer %}
+                                        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.5 0C4.25334 0 0 4.25334 0 9.5C0 14.7467 4.25334 19 9.5 19C14.7467 19 19 14.7467 19 9.5C19 4.25334 14.7467 0 9.5 0ZM8.74 14.3097L3.86498 9.43464L6.01464 7.28536L8.74 10.0103L13.68 5.07034L15.8297 7.22L8.74 14.3097Z" fill="#4DB664"/>
+                                            </svg>
+                                        {% else %}
+                                        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.5 0C4.25334 0 0 4.25334 0 9.5C0 14.7467 4.25334 19 9.5 19C14.7467 19 19 14.7467 19 9.5C19 4.25334 14.7467 0 9.5 0ZM14.755 12.6054L12.6054 14.7546L9.5 11.6497L6.39502 14.7546L4.24536 12.6054L7.35034 9.5L4.24498 6.39464L6.39464 4.24536L9.5 7.35034L12.605 4.24536L14.7546 6.39464L11.6497 9.5L14.755 12.6054Z" fill="#D53131"/>
+                                            </svg>
+                                        {% endif %}
+                                        {{test.answer4}}
+                                    </div>
+                                </div>
+    
+                            </div>
+                            {% endfor %}
+                        </div>
+    
+                    </div>
+    
+                </div>
+    
+                <div class="row">
+                    <div class="col-12 pt-2 col-md-12 col-sm-12">
+                        <div class="container text-center mb-3">
+                            <a class="btn btn-outline-primary w-25 " type="button" href="index.html"> Повторное
+                                тестирование </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

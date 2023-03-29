@@ -1,0 +1,321 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% load static %}
+    <link rel="stylesheet" href={% static "bootstrap-5.3.0-alpha1-dist/css/bootstrap.css" %}>
+    <script src={% static "bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.js" %}></script>
+    <script src={% static "bootstrap-5.3.0-alpha1-dist/js/bootstrap.esm.js" %}></script>
+    <script src={% static "bootstrap-5.3.0-alpha1-dist/js/bootstrap.js" %}></script>
+    <script src={% static "bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.min.js" %}></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand text-light " href="{% url 'main' %}">Лого</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Переключатель навигации">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+        </div>
+    </nav>
+
+    
+<div class="container justify-content-center pt-2 mt-2 ">
+    <div class="container  mt-5 card">
+        <div class="row pt-2">
+            <div class="col-12 col-md-6 col-sm-6 ">
+            </div>
+            <div class="col-12 col-md-6 col-sm-6 ">
+                <div class="container pt-1">
+                    <a class="btn btn-outline-danger w-25 float-lg-end " 
+                    type="button" onclick="Finish('{{c.0.id_question}}')"> Завершить</a>
+                </div>
+            </div>
+        </div>
+
+		{% for test in c %}
+        <div class="questions row pt-4">
+            <div class="col-12 col-md-6 col-sm-6 ">
+
+                <h4 class="text-secondary mx-4">Вопрос:</h4>
+                <div id="{{test.question.id}}" class="question container pt-2 mx-3">
+                    <p>{{test.question.question}}</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-6  ">
+                <h4 class="text-secondary mx-2">Выберите варианты ответов:</h4>
+                <div class="container pt-2">
+                    <div class="form-check">
+
+                        {%if test.answerSend == test.question.answer1 %}
+                        <input class="answer1 form-check-input" onclick="SaveTest('{{c.0.id_question}}')" checked type="checkbox" value="" name="flexCheckDefault1">
+                        {% else %}
+                        <input class="answer1 form-check-input" onclick="SaveTest('{{c.0.id_question}}')" type="checkbox" value="" name="flexCheckDefault1">
+                        {% endif %}
+
+                        <label class="answer1_label" for="flexCheckDefault1">
+                            {{test.question.answer1}}
+                        </label>
+
+                    </div>
+                    <div class="form-check">
+
+                        {%if test.answerSend == test.question.answer2 %}
+                        <input class="answer2 form-check-input" onclick="SaveTest('{{c.0.id_question}}')" checked type="checkbox" value="" name="flexCheckChecked2">
+                        {% else %}
+                        <input class="answer2 form-check-input" onclick="SaveTest('{{c.0.id_question}}')" type="checkbox" value="" name="flexCheckChecked2">
+                        {% endif %}
+
+                        <label class="answer2_label" for="flexCheckChecked2">
+                            {{test.question.answer2}}
+                        </label>
+
+                    </div>
+                    <div class="form-check">
+
+                        {%if test.answerSend == test.question.answer3 %}
+                        <input class="answer3 form-check-input" onclick="SaveTest('{{c.0.id_question}}')" checked type="checkbox" value="" name="flexCheckChecked3">
+                        {% else %}
+                        <input class="answer3 form-check-input" onclick="SaveTest('{{c.0.id_question}}')" type="checkbox" value="" name="flexCheckChecked3">
+                        {% endif %}   
+
+                        <label class="answer3_label" for="flexCheckChecked3">
+                            {{test.question.answer3}}
+                        </label>
+
+                    </div>
+                    <div class="form-check">
+
+                        {%if test.answerSend == test.question.answer4 %}
+                        <input class="answer4 form-check-input" onclick="SaveTest('{{c.0.id_question}}')" checked type="checkbox" value="" name="flexCheckChecked4">
+                        {% else %}
+                        <input class="answer4 form-check-input" onclick="SaveTest('{{c.0.id_question}}')" type="checkbox" value="" name="flexCheckChecked4">
+                        {% endif %}
+
+                        <label class="answer4_label" for="flexCheckChecked4">
+                            {{test.question.answer4}}
+                        </label>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="row pt-5 ">
+            <div class="col-12 col-md-6  ">
+                <nav aria-label="...">
+                    <ul class="pagination pagination-sm">
+                        {% for test in c %}
+                            <li >
+                                <!-- <a class="btmPage page-link" id="{{test.id_question}}" tabindex="-1">1</a> -->
+                                <button class="btmPage page-link" id="{{test.id_question}}" value="1">12</button>
+                            </li>
+                            {% endfor %}
+                    </ul>
+                </nav>  
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="container">
+                    <a class="btn btn-outline-primary w-25 float-lg-end " type="button" onclick="newPage()"> Следующий</a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+    <!-- {{test.id_question}}<br>
+    {{test.answerSend}}<br>
+    {{test.question.question}}<br><br> -->
+
+
+</body>
+
+<script>
+
+
+
+function SaveTest(idTest,status="Исполняется") {
+            let answers = document.getElementsByClassName("question container pt-2 mx-3");
+
+            let answer1 = document.getElementsByClassName("answer1 form-check-input");
+            let answer2 = document.getElementsByClassName("answer2 form-check-input");
+            let answer3 = document.getElementsByClassName("answer3 form-check-input");
+            let answer4 = document.getElementsByClassName("answer4 form-check-input");
+
+            let answer1_label = document.getElementsByClassName("answer1_label");
+            let answer2_label = document.getElementsByClassName("answer2_label");
+            let answer3_label = document.getElementsByClassName("answer3_label");
+            let answer4_label = document.getElementsByClassName("answer4_label");
+            
+            let json = "{ ";
+            for (let j = 0; j < answers.length; j++) {
+                let st = "";
+                if (answer1[j].checked == true) {
+                    // data1.append('answer', answer1_label[j].innerHTML);
+                    st = answer1_label[j].innerHTML;
+                }
+                else if (answer2[j].checked == true) {
+                    // data1.append('answer', answer2_label[j].innerHTML);
+                    st = answer2_label[j].innerHTML;
+                }
+                else if (answer3[j].checked == true) {
+                    // data1.append('answer', answer3_label[j].innerHTML);
+                    st = answer3_label[j].innerHTML;
+                }
+                else if (answer4[j].checked == true) {
+                    // data1.append('answer', answer4_label[j].innerHTML);
+                    st = answer4_label[j].innerHTML;
+                }
+                else {
+                    // data1.append('answer', "000");
+                    st = "0!0";
+                }
+                // st.trim()
+                // alert((st.trim()));
+                if (j != answers.length - 1) {
+                    json += '"'+answers[j].id+'"' + ":" +'"'+ st.trim() +'"'+ " , ";
+                }
+                else {
+                    json +='"'+ answers[j].id+'"' + ":" +'"'+ st+'"' + " } ";
+                }
+
+            }
+
+            // alert(json);
+            // return;
+
+            var data1 = new FormData()
+            // data1.append('answerID', answers[j].id);
+            data1.append('testID', '{{idTest}}');
+            data1.append('answer', json);
+            data1.append('status', status);
+            
+            var token = '{{ csrf_token }}';
+
+            $.ajax({
+                type: 'post',
+                url: "{% url 'resultcreate' %}",
+                data: data1,
+                processData: false,
+                contentType: false,
+                headers: { 'X-CSRFToken': token },
+                success: function (data) {
+                    // alert(data.id + " " + data.text);
+                    return(data.id);
+                },
+                error: function (data) {
+                    alert("mistake: " + data);
+                }
+            });
+
+            
+        }
+function Finish(idTest){
+    id=SaveTest(idTest,"Завершон");
+    window.location.href = "/resultUser/{{idRes}}";
+}
+
+function BtmPage() {
+            let btm = document.getElementsByClassName("btmPage page-link");
+            // alert(test.length);
+
+            for (let i = 0; i < btm.length; i++) {
+                btm[0].style.backgroundColor = "Gray";
+                btm[i].innerHTML = i + 1;
+                btm[i].onclick = function () {
+                    ViewQuestion();
+                    let test = document.getElementsByClassName("questions row pt-4");
+                    test[0].style.display = "none";
+                    test[i].style.display = "flex";
+
+                    let btm = document.getElementsByClassName("btmPage page-link");
+
+                    for (let j = 0; j < btm.length; j++) {
+                        btm[j].style.backgroundColor = "";
+                    }
+
+                    btm[i].style.backgroundColor = "Gray";
+
+                    AnswerBtm();
+                };
+            }
+            
+        }
+
+function ViewQuestion() {
+            let test = document.getElementsByClassName("questions row pt-4");
+
+            for (let i = 0; i < test.length; i++) {
+                test[i].style.display = 'none';
+            }
+
+            test[0].style.display = "flex";
+            
+            
+        }
+
+function newPage() {
+            let test = document.getElementsByClassName("questions row pt-4");
+        
+            let btm = document.getElementsByClassName("btmPage page-link");
+
+            for (let j = 0; j < btm.length; j++) {
+                btm[j].style.backgroundColor = "";
+            }
+
+
+            for (let i = 0; i < test.length; i++) {
+                if (i == test.length - 1) {
+                    btm[i].style.backgroundColor = "Gray";
+                    break;
+                }
+                if (test[i].style.display == 'flex') {
+                    ViewQuestion();
+                    test[0].style.display = "none";
+                    test[i + 1].style.display = "flex";
+                    btm[i + 1].style.backgroundColor = "Gray";
+                    // btm[i].style.backgroundColor=rgb(118,118,188)
+                    break;
+                }
+            }
+            AnswerBtm();
+        }
+
+function AnswerBtm(){
+            let btm = document.getElementsByClassName("btmPage page-link");
+            let answer1 = document.getElementsByClassName("answer1 form-check-input");
+            let answer2 = document.getElementsByClassName("answer2 form-check-input");
+            let answer3 = document.getElementsByClassName("answer3 form-check-input");
+            let answer4 = document.getElementsByClassName("answer4 form-check-input");
+            for (let j = 0; j < btm.length; j++) {
+                
+                if (answer1[j].checked == true) {
+                    btm[j].style.backgroundColor = "Gainsboro";
+                }
+                if (answer2[j].checked == true) {
+                    btm[j].style.backgroundColor = "Gainsboro";
+                }
+                if (answer3[j].checked == true) {
+                    btm[j].style.backgroundColor = "Gainsboro";
+                }
+                if (answer4[j].checked == true) {
+                    btm[j].style.backgroundColor = "Gainsboro";
+                }
+            }
+        }
+
+        AnswerBtm();
+        ViewQuestion();
+        BtmPage();
+</script>
+
+</html>

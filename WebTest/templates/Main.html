@@ -1,0 +1,218 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% load static %}
+    <link rel="stylesheet" href={% static "bootstrap-5.3.0-alpha1-dist/css/bootstrap.css" %}>
+    <script src={% static "bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.js" %}></script>
+    <script src={% static "bootstrap-5.3.0-alpha1-dist/js/bootstrap.esm.js" %}></script>
+    <script src={% static "bootstrap-5.3.0-alpha1-dist/js/bootstrap.js" %}></script>
+    <script src={% static "bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.min.js" %}></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand text-light " href="{% url 'main' %}">Лого</a>
+            <a class="btn btn-outline-primary bg-white " type="button" onclick="LogOut()"> Выйти </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Переключатель навигации">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+        </div>
+    </nav>
+    <!-- # name, category, idResult1, idResult2, result1, result2) -->
+    <!-- <br> -->
+    <!-- {% for test in resultsTests %}
+    {{test.name}}<br>
+    {{test.category}}<br>
+    {{test.idResult1}}<br>
+    {{test.idResult2}}<br>
+    {{test.result1}}<br>
+    {{test.result2}}<br><br>
+    {% endfor %} -->
+
+    <div style="background-color: rgb(192, 185, 227);">
+
+    </div>
+    <div class="container py-5">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active fs-5" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                    type="button" role="tab" aria-controls="home" aria-selected="true">Все тесты
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fs-5" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                    type="button" role="tab" aria-controls="profile" aria-selected="false">Пройденные тесты
+                </button>
+            </li>
+
+        </ul>
+
+        <div class="row float-lg-end">
+            <div class="container">
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Фильтр
+                    </button>
+                    <ul class="dropdown-menu">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search">
+                        <li><input class="form-check-input mx-2" type="checkbox" value="" id="flexCheckChecked1">
+                            <label class="form-check-label" for="flexCheckChecked3">
+                                Django
+                            </label>
+                        </li>
+                        <li><input class="form-check-input mx-2" type="checkbox" value="" id="flexCheckChecked2">
+                            <label class="form-check-label" for="flexCheckChecked3">
+                                Sql
+                            </label>
+                        </li>
+                        <li><input class="form-check-input mx-2" type="checkbox" value="" id="flexCheckChecked3">
+                            <label class="form-check-label" for="flexCheckChecked3">
+                                Python
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="row mt-4 ">
+                    {% for test in tests %}
+                    <div class="col-12 col-sm-4 col-md-3 col-lg-3 mb-3 text-center">
+                        <div class="card shadow-lg h-100">
+                            {% if 2 <= test.countResult %}
+                            <a onclick="alert('Вы уже прошли тест 2 раза')"
+                                class="card-link text-muted text-decoration-none">
+                            {% else %}
+                            <a href="/testInfo/{{test.idTest}}" class="card-link text-muted text-decoration-none">
+                            {% endif %}
+                                    <div class="card-body">
+                                        <h5 class="card-title text-muted mb-5">{{test.name}}</h5>
+                                        <h5 class="card-subtitle mb-2 text-muted mb-5 pt-5">Результат:
+                                            {{test.resultPersent}}%</h5>
+                                        <div class="container ">
+                                            {% if test.countResult == "none" %}
+                                            <div class="form-check form-check-inline ">
+                                                <input class="form-check-input m-1"
+                                                    style="border-color: #0a53be; opacity: initial" type="checkbox"
+                                                    name="flexRadioDisabled17" id="flexRadioDisabled17" disabled>
+
+                                            </div>
+                                            {% else %}
+                                            <div class="form-check form-check-inline ">
+                                                <input class="form-check-input m-1"
+                                                    style="border-color: #0a53be; opacity: initial" type="checkbox"
+                                                    name="flexRadioDisabled17" id="flexRadioDisabled17" checked
+                                                    disabled>
+
+                                            </div>
+                                            {% endif %}
+
+                                            {% if 2 <= test.countResult %}
+                                            <div class="form-check form-check-inline ">
+                                                <input class="form-check-input m-1"
+                                                    style="border-color: #0a53be; opacity: initial" type="checkbox"
+                                                    name="flexRadioDisabled17" id="flexRadioDisabled17" checked
+                                                    disabled>
+
+                                            </div>
+                                            {% else %}
+                                            <div class="form-check form-check-inline ">
+                                                <input class="form-check-input m-1"
+                                                    style="border-color: #0a53be; opacity: initial" type="checkbox"
+                                                    name="flexRadioDisabled17" id="flexRadioDisabled17" disabled>
+
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <p class="card-text"></p>
+                                        <h5 class="card-subtitle mb-2 text-muted pt-5"><!--Уровень сложности--></h5>
+                                        <h5>{{test.category}}</h5>
+                                    </div>
+                                </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                <div class="row mt-4 ">
+
+                    {% for test in resultsTests %}
+                    <div class="col-12 col-sm-4 col-md-3 col-lg-3 mb-3 text-center">
+
+                        <!-- <a href="/resultUser/test." class="card-link text-muted text-decoration-none">
+
+                        </a> -->
+                        <div class="card shadow-lg h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-muted mb-5">{{test.name}}</h5>
+                                <a style="text-decoration:none" href="/resultUser/{{test.idResult1}}">
+                                <h5 class="card-subtitle mb-2 text-muted mb-5 pt-5">Результат теста 1:
+                                    {{test.result1}}%
+                                </h5></a>
+                                
+                                    {% if 'none'  != test.result2 %}
+                                    <a style="text-decoration:none" href="/resultUser/{{test.idResult2}}">
+                                    <h5 class="card-subtitle mb-2 text-muted mb-5 pt-5">Результат теста 2:
+                                        {{test.result2}}%</h5></a>
+                                    {% endif %}
+                                    
+                                <div class="container ">
+                                </div>
+                                <p class="card-text"></p>
+                                <h5 class="card-subtitle mb-2 text-muted pt-5"><!--Уровень сложности--></h5>
+                                <h5>{{test.category}}</h5>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </div>
+
+
+</body>
+
+<script>
+    function LogOut() {
+        var token = '{{ csrf_token }}';
+        $.ajax({
+            type: 'post',
+            url: "{% url 'logout' %}",
+            data: "",
+            processData: false,
+            contentType: false,
+            headers: { 'X-CSRFToken': token },
+            success: function (data) {
+                // alert(data.User);
+                window.location.href = "{% url 'loginpage' %}";
+            },
+            error: function (data) {
+                alert("mistake: " + data);
+            }
+        })
+    }
+</script>
+
+</html>
